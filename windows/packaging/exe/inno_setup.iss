@@ -33,9 +33,32 @@ begin
   end;
 end;
 
+procedure DeleteDirContents(const Dir: string);
+var
+  FindRec: TFindRec;
+  FilePath: string;
+begin
+  if FindFirst(Dir + '\*', FindRec) then
+  try
+    repeat
+      if (FindRec.Name <> '.') and (FindRec.Name <> '..') then
+      begin
+        FilePath := Dir + '\' + FindRec.Name;
+        if FindRec.Attributes and FILE_ATTRIBUTE_DIRECTORY <> 0 then
+          DelTree(FilePath, True, True, True)
+        else
+          DeleteFile(FilePath);
+      end;
+    until not FindNext(FindRec);
+  finally
+    FindClose(FindRec);
+  end;
+end;
+
 function InitializeSetup(): Boolean;
 begin
   KillProcesses;
+  DeleteDirContents(ExpandConstant('{userappdata}\com.follow\clash'));
   Result := True;
 end;
 
