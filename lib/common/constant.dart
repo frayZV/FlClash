@@ -30,7 +30,7 @@ const moreDuration = Duration(milliseconds: 100);
 const animateDuration = Duration(milliseconds: 100);
 const midDuration = Duration(milliseconds: 200);
 const commonDuration = Duration(milliseconds: 300);
-const defaultUpdateDuration = Duration(days: 1);
+const defaultUpdateDuration = Duration(minutes: 60);
 const mmdbFileName = "geoip.metadb";
 const asnFileName = "ASN.mmdb";
 const geoIpFileName = "GeoIP.dat";
@@ -49,7 +49,7 @@ const repository = "chen08209/FlClash";
 const defaultExternalController = "127.0.0.1:9090";
 const maxMobileWidth = 600;
 const maxLaptopWidth = 840;
-const defaultTestUrl = "https://www.gstatic.com/generate_204";
+const defaultTestUrl = "https://cp.cloudflare.com/generate_204";
 final commonFilter = ImageFilter.blur(
   sigmaX: 5,
   sigmaY: 5,

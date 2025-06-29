@@ -171,9 +171,18 @@ extension ProfileExtension on Profile {
     final response = await request.getFileResponseForUrl(url);
     final disposition = response.headers.value("content-disposition");
     final userinfo = response.headers.value('subscription-userinfo');
+    final profileUpdateIntervalHeader = response.headers.value('profile-update-interval');
+    Duration? updateInterval;
+    if (profileUpdateIntervalHeader != null) {
+      final hours = int.tryParse(profileUpdateIntervalHeader);
+      if (hours != null && hours > 0) {
+        updateInterval = Duration(minutes: hours * 60);
+      }
+    }
     return await copyWith(
       label: label ?? utils.getFileNameForDisposition(disposition) ?? id,
       subscriptionInfo: SubscriptionInfo.formHString(userinfo),
+      autoUpdateDuration: updateInterval ?? autoUpdateDuration,
     ).saveFile(response.data);
   }
 
